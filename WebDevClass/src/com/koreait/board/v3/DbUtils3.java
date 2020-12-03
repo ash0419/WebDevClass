@@ -8,9 +8,9 @@ import java.sql.SQLException;
 
 public class DbUtils3 {
 	public static Connection getCon() throws ClassNotFoundException, SQLException {
-		final String URL = "jdbc:mysql://localhost:3308/board_1";
+		final String URL = "jdbc:mysql://localhost:3306/board_1";
 		final String USER = "root";
-		final String PW = "ipod0419";
+		final String PW = "koreait2020";
 
 		Class.forName("com.mysql.cj.jdbc.Driver");
 		Connection con = DriverManager.getConnection(URL, USER, PW);
