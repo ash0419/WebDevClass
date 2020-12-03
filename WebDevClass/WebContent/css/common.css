@@ -1,0 +1,145 @@
+@charset "UTF-8";
+/* 초기화 */
+html, body {
+	height: 100%;
+}
+
+body h1, h1, h2, h3, h4, h5, h6, p, ul, dl, dd {
+	margin: 0;
+	padding: 0;
+}
+
+ul li {
+	list-style: none;
+}
+
+a {
+	text-decoration: none;
+}
+/* 위치를 숨길때 display:none; 은 잘 사용하지 않는다 */
+.hidden {
+	position: absolute;
+	/* top bottom right left로 위치 설정. 절대 양수로 화면 밖으로 보내면 안된다.*/
+	top: -1000px;
+	left: 0;
+}
+/* 헤더 */
+#header {
+	overflow: hidden;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 999;
+	width: 100%;
+	height: 100px;
+}
+
+#header.on {
+	height: 350px;
+	background: #fff;
+}
+
+#header::before {
+	content: "";
+	position: absolute;
+	top: 100px;
+	left: 0;
+	width: 100%;
+	height: 250px;
+	background: #d1d1d1;
+}
+
+#header h1 {
+	position: absolute;
+	top: 30px;
+	left: 100px;
+}
+
+#header h1 a {
+	color: #fff;
+}
+
+#header.on h1 a {
+	color: #000;
+}
+/* gnb */
+#gnb {
+	width: 720px;
+	margin: 45px auto 0 auto; /* 반복이 되면 생략 가능 padding은 auto가 없다.*/
+}
+
+#gnb>ul {
+	
+}
+
+#gnb>ul>li {
+	position: relative;
+	width: 180px;
+	float: left;
+	color: #fff;
+	font-size: 18px;
+}
+
+#header.on #gnb>ul>li {
+	color: #000;
+}
+
+.snb {
+	position: absolute;
+	top: 55px;
+	left: 0;
+	padding: 20px 0;
+}
+
+.snb li {
+	line-height: 30px;
+}
+
+.snb li a {
+	color: #000;
+}
+
+#lnb {
+	position: absolute;
+	top: 45px;
+	right: 100px;
+}
+
+#lnb ul {
+	
+}
+
+#lnb ul li {
+	float: left; /* block요소를 가로배열할 때 사용 */
+	/* padding은 요소 안에다가 여백을 준다.
+	margin은 나와 다른 요소간의 간격*/
+	padding: 0 10px 0 10px;
+}
+
+#lnb ul li a {
+	color: #fff;
+}
+
+#header.on #lnb ul li a {
+	color: #000;
+}
+
+/* 비디오 */
+#videoWrap {
+	overflow: hidden;
+	position: relative;
+	width: 100%;
+	height: 100%;
+	background: #ccc;
+}
+
+#videoWrap video {
+	position: absolute;
+	top: 0;
+	left: 0;
+	min-height: 100%;
+	min-width: 1920px;
+}
+/* 본문 */
+
+/* 푸터 */
