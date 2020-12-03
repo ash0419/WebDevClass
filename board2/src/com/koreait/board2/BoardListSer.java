@@ -20,6 +20,6 @@ public class BoardListSer extends HttpServlet {
 		
 		request.setAttribute("title", "리스트");
 		request.setAttribute("page", "/WEB-INF/jsp/bList");
-		Utils.forward(request, response);
+		Utils.forward("bList", request, response);
 	}
 }

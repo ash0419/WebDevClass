@@ -7,10 +7,10 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class Utils {
-	public static void forward(HttpServletRequest request, HttpServletResponse response)
+	public static void forward(String target, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String jsp = "/WEB-INF/jsp/temp/template.jsp";
-
+		request.setAttribute("page", String.format("/WEB-INF/jsp/%s.jsp", target));
 		request.getRequestDispatcher(jsp).forward(request, response);
 	}
 

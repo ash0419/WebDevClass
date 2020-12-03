@@ -17,7 +17,7 @@
 			</ul>
 		</header>
 		<section>
-		<jsp:include page="${page}.jsp" />
+		<jsp:include page="${page}" />
 		</section>
 		<footer></footer>
 	</div>
