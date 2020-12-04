@@ -6,6 +6,7 @@
 <meta charset="UTF-8">
 <title>${title}</title>
 <link rel="stylesheet" href="/res/css/common.css">
+<script defer src="/res/js/common.js"></script> <!-- defer는 맨 밑에 놔둔 효과, async는 화면을 안 느려지게 하는 효과 -->
 </head>
 <body>
 	<div id="container">

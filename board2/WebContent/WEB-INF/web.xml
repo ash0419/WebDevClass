@@ -20,6 +20,7 @@
 			<param-value>UTF-8</param-value>
 		</init-param>
 	</filter>
+	
 	<filter-mapping>
 		<filter-name>setCharacterEncoding</filter-name>
 		<url-pattern>/*</url-pattern>

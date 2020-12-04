@@ -1,3 +1,4 @@
+
 package com.koreait.board2.common;
 
 import java.io.IOException;
@@ -7,11 +8,17 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 public class Utils {
-	public static void forward(String target, HttpServletRequest request, HttpServletResponse response)
+	public static void forward(String title, String target, HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		String jsp = "/WEB-INF/jsp/temp/template.jsp";
 		request.setAttribute("page", String.format("/WEB-INF/jsp/%s.jsp", target));
+		request.setAttribute("title", title);
 		request.getRequestDispatcher(jsp).forward(request, response);
+	}
+
+	public static void forwardErr(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		forward("에러", "err", request, response);
 	}
 
 	public static int getIntParam(HttpServletRequest request, String key) {
@@ -31,7 +38,7 @@ public class Utils {
 		try {
 			return Integer.parseInt(val);
 		} catch (Exception e) {
-			return defVal;
 		}
+		return defVal;
 	}
 }
