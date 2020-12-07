@@ -18,4 +18,12 @@ public class BoardService { // logic 담당
 			return BoardDAO.insBoard(param);
 		}
 	}
+
+	public static BoardVO selBoard(BoardVO param) {
+		return BoardDAO.selBoard(param);
+	}
+
+	public static int delBoard(BoardVO param) {
+		return BoardDAO.delBoard(param);
+	}
 }

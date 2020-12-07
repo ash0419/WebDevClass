@@ -11,6 +11,14 @@ html, body {
 	height: 100%;
 }
 
+.pointer {
+	cursor: pointer;
+}
+
+tr.pointer:hover {
+	background-color: #d2dae255;
+}
+
 #container {
 	width: 100%;
 	height: 100%;
@@ -49,12 +57,13 @@ header ul li a:hover:not(.active) {
 
 .centerCont {
 	width: 100%;
-	height: 100%; 
-	display : flex;
+	height: 100%;
+	display: flex;
 	justify-content: center;
 	align-items: center;
 	display: flex;
 }
+
 #container section {
-	flex-grow:1 ;
+	flex-grow: 1;
 }
