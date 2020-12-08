@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -85,21 +86,30 @@ public class BoardDAO {
 		int result = 0;
 		Connection con = null;
 		PreparedStatement ps = null;
+		ResultSet rs = null;
 		String sql = " INSERT INTO t_board_? (title, ctnt) values ( ? , ? ) ";
 
 		try {
 			con = DbUtils.getCon();
-			ps = con.prepareStatement(sql);
+			ps = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setInt(1, vo.getTyp());
 			ps.setNString(2, vo.getTitle());
 			ps.setNString(3, vo.getCtnt());
 
 			result = ps.executeUpdate();
+
+			rs = ps.getGeneratedKeys();
+			if (rs.next()) {
+				int i_board = rs.getInt(1);
+				vo.setI_board(i_board);
+			}
+
+			return result;
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			DbUtils.close(con, ps);
+			DbUtils.close(con, ps, rs);
 		}
 		return result;
 	}
@@ -118,6 +128,30 @@ public class BoardDAO {
 
 			result = ps.executeUpdate();
 
+		} catch (ClassNotFoundException | SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} finally {
+			DbUtils.close(con, ps);
+		}
+		return result;
+	}
+
+	public static int modBoard(BoardVO vo) {
+		int result = 0;
+		Connection con = null;
+		PreparedStatement ps = null;
+		String sql = " UPDATE t_board_? SET title=?, ctnt=? WHERE i_board=? ";
+
+		try {
+			con = DbUtils.getCon();
+			ps = con.prepareStatement(sql);
+			ps.setInt(1, vo.getTyp());
+			ps.setNString(2, vo.getTitle());
+			ps.setNString(3, vo.getCtnt());
+			ps.setInt(4, vo.getI_board());
+
+			result = ps.executeUpdate();
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

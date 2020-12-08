@@ -29,7 +29,8 @@ public class BoardRegmodSer extends HttpServlet {
 
 		if (i_board > 0) { // 수정 request에다가 자료를 담는다.
 			title = "글 수정";
-			// TODO 수정일때 처리
+			vo.setI_board(i_board);
+			request.setAttribute("data", BoardService.selBoard(vo));
 		}
 		request.setAttribute("typ", typ);
 		Utils.forward(title, "bRegmod", request, response);
@@ -59,6 +60,6 @@ public class BoardRegmodSer extends HttpServlet {
 			doGet(request, response);
 			return;
 		}
-		response.sendRedirect("/bList?typ=" +typ);
+		response.sendRedirect("/bDetail?typ=" + typ + "&i_board=" + param.getI_board());
 	}
 }

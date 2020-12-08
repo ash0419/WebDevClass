@@ -39,6 +39,11 @@ public class BoardDetailSer extends HttpServlet {
 		vo.setI_board(i_board);
 
 		int result = BoardService.delBoard(vo);
+		if(result == 0) {
+			request.setAttribute("msg", "삭제할 수 없습니다.");
+			doGet(request, response);
+			return;
+		}
 
 		response.sendRedirect("/bList?typ=" + typ);
 	}
