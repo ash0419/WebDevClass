@@ -15,6 +15,7 @@
 	<div>번호 : ${item.i_board}</div>
 	<div>제목 : ${item.title}</div>
 	<div>내용 : ${item.ctnt}</div>
+	<div>조회수 : ${item.hits}</div>
 	<div>작성일 : ${item.r_dt}</div>
 </div>
 <script>

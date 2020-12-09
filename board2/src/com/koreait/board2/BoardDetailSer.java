@@ -23,8 +23,9 @@ public class BoardDetailSer extends HttpServlet {
 		BoardVO vo = new BoardVO();
 		vo.setTyp(typ);
 		vo.setI_board(i_board);
-
-		request.setAttribute("item", BoardService.selBoard(vo));
+		
+		
+		request.setAttribute("item", BoardService.detail(vo, request));
 
 		Utils.forward("리스트 세부내용", "bDetail", request, response);
 	}
@@ -39,7 +40,7 @@ public class BoardDetailSer extends HttpServlet {
 		vo.setI_board(i_board);
 
 		int result = BoardService.delBoard(vo);
-		if(result == 0) {
+		if (result == 0) {
 			request.setAttribute("msg", "삭제할 수 없습니다.");
 			doGet(request, response);
 			return;

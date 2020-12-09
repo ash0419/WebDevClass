@@ -6,6 +6,15 @@ public class BoardVO {
 	private String ctnt;
 	private String r_dt;
 	private int typ;
+	private int hits;
+
+	public int getHits() {
+		return hits;
+	}
+
+	public void setHits(int hits) {
+		this.hits = hits;
+	}
 
 	public int getI_board() {
 		return i_board;
