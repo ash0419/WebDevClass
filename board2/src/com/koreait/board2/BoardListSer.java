@@ -18,12 +18,15 @@ public class BoardListSer extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int typ = Utils.getIntParam(request, "typ", 1);
+		int page = Utils.getIntParam(request, "page", 1);
 
 		BoardVO param = new BoardVO();
 		param.setTyp(typ);
+		param.setRowCntPerPage(5);
 
+		request.setAttribute("pageCnt", BoardService.selPageCnt(param));
 		request.setAttribute("typ", typ);
-		request.setAttribute("list", BoardService.selBoardList(param));
+		request.setAttribute("list", BoardService.selBoardList(param, page));
 
 		Utils.forward("리스트", "bList", request, response);
 	}

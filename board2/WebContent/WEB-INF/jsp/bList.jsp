@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"
+%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div>
 	<div>
@@ -21,6 +22,12 @@
 			</tr>
 		</c:forEach>
 	</table>
+	<div class="pageContainer">
+		<c:forEach begin="1" end="${pageCnt}" var="i">
+			<span class="page">
+			<a href="/bList?typ=${typ}&page=${i}">${i}</span>
+		</c:forEach>
+	</div>
 </div>
 
 <script> //자바스크립트는 서버가 아니라 브라우저, 개인 컴퓨터에서 돌아간다. 그래서 문장에 값을 넣어주지 않고 그대로 보내줘야함.

@@ -10,7 +10,17 @@ import com.koreait.board2.db.BoardDAO;
 import com.koreait.board2.model.BoardVO;
 
 public class BoardService { // logic 담당
+	public static int selPageCnt(BoardVO param) {
+		return BoardDAO.selPageCnt(param);
+	}
+
 	public static List<BoardVO> selBoardList(BoardVO param) {
+		return BoardDAO.selBoardList(param);
+	}
+
+	public static List<BoardVO> selBoardList(BoardVO param, int page) {
+		int s_idx = (page - 1) * param.getRowCntPerPage();
+		param.setS_idx(s_idx);
 		return BoardDAO.selBoardList(param);
 	}
 
@@ -39,8 +49,8 @@ public class BoardService { // logic 담당
 			String str = strArr.nextElement();
 
 			if (str.startsWith("b_")) {
-				System.out.println("key : " +str);
-				System.out.println("value : " +application.getAttribute(str));
+				System.out.println("key : " + str);
+				System.out.println("value : " + application.getAttribute(str));
 			}
 		}
 		return selBoard(param);
