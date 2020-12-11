@@ -8,6 +8,8 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.koreait.board2.common.SQLInterUpdate;
+import com.koreait.board2.model.BoardCmtVO;
 import com.koreait.board2.model.BoardVO;
 
 public class BoardDAO {
@@ -141,73 +143,94 @@ public class BoardDAO {
 		} finally {
 			DbUtils.close(con, ps, rs);
 		}
-		return result;
+		return 0;
 	}
 
-	public static int delBoard(BoardVO vo) {
-		int result = 0;
+	/*
+	 * public static int delBoard(BoardVO vo) { int result = 0; Connection con =
+	 * null; PreparedStatement ps = null; String sql =
+	 * " DELETE FROM t_board_? WHERE i_board=? ";
+	 * 
+	 * try { con = DbUtils.getCon(); ps = con.prepareStatement(sql); ps.setInt(1,
+	 * vo.getTyp()); ps.setInt(2, vo.getI_board());
+	 * 
+	 * result = ps.executeUpdate();
+	 * 
+	 * } catch (ClassNotFoundException | SQLException e) { // TODO Auto-generated
+	 * catch block e.printStackTrace(); } finally { DbUtils.close(con, ps); } return
+	 * result; }
+	 * 
+	 * public static int modBoard(BoardVO vo) { int result = 0; Connection con =
+	 * null; PreparedStatement ps = null; String sql =
+	 * " UPDATE t_board_? SET title=?, ctnt=? WHERE i_board=? ";
+	 * 
+	 * try { con = DbUtils.getCon(); ps = con.prepareStatement(sql); ps.setInt(1,
+	 * vo.getTyp()); ps.setNString(2, vo.getTitle()); ps.setNString(3,
+	 * vo.getCtnt()); ps.setInt(4, vo.getI_board());
+	 * 
+	 * result = ps.executeUpdate(); } catch (ClassNotFoundException | SQLException
+	 * e) { // TODO Auto-generated catch block e.printStackTrace(); } finally {
+	 * DbUtils.close(con, ps); } return result; }
+	 * 
+	 * public static void addHits(BoardVO param) { Connection con = null;
+	 * PreparedStatement ps = null; String sql =
+	 * "UPDATE t_board_? SET hits = hits +1 WHERE i_board=? ";
+	 * 
+	 * try { con = DbUtils.getCon(); ps = con.prepareStatement(sql); ps.setInt(1,
+	 * param.getTyp()); ps.setInt(2, param.getI_board());
+	 * 
+	 * ps.executeUpdate(); } catch (ClassNotFoundException | SQLException e) { //
+	 * TODO Auto-generated catch block e.printStackTrace(); } finally {
+	 * DbUtils.close(con, ps); } }
+	 */
+	public static int myExecuteUpdate(String sql, SQLInterUpdate sqlInter) {
 		Connection con = null;
 		PreparedStatement ps = null;
-		String sql = " DELETE FROM t_board_? WHERE i_board=? ";
 
 		try {
 			con = DbUtils.getCon();
 			ps = con.prepareStatement(sql);
-			ps.setInt(1, vo.getTyp());
-			ps.setInt(2, vo.getI_board());
+			sqlInter.proc(ps);
 
-			result = ps.executeUpdate();
-
+			return ps.executeUpdate();
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
 			DbUtils.close(con, ps);
 		}
-		return result;
+		return 0;
 	}
 
-	public static int modBoard(BoardVO vo) {
-		int result = 0;
+	public static List<BoardCmtVO> selBoardCmtList(final BoardCmtVO param) {
+		BoardCmtVO vo = null;
 		Connection con = null;
 		PreparedStatement ps = null;
-		String sql = " UPDATE t_board_? SET title=?, ctnt=? WHERE i_board=? ";
+		ResultSet rs = null;
+		List<BoardCmtVO> list = new ArrayList<BoardCmtVO>();
 
-		try {
-			con = DbUtils.getCon();
-			ps = con.prepareStatement(sql);
-			ps.setInt(1, vo.getTyp());
-			ps.setNString(2, vo.getTitle());
-			ps.setNString(3, vo.getCtnt());
-			ps.setInt(4, vo.getI_board());
-
-			result = ps.executeUpdate();
-		} catch (ClassNotFoundException | SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} finally {
-			DbUtils.close(con, ps);
-		}
-		return result;
-	}
-
-	public static void addHits(BoardVO param) {
-		Connection con = null;
-		PreparedStatement ps = null;
-		String sql = "UPDATE t_board_? SET hits = hits +1 WHERE i_board=? ";
+		String sql = " SELECT i_cmt, ctnt FROM t_board_cmt_? WHERE i_board=? ORDER BY i_cmt DESC ";
 
 		try {
 			con = DbUtils.getCon();
 			ps = con.prepareStatement(sql);
 			ps.setInt(1, param.getTyp());
 			ps.setInt(2, param.getI_board());
+			rs = ps.executeQuery();
 
-			ps.executeUpdate();
+			while (rs.next()) {
+				vo = new BoardCmtVO();
+				vo.setI_cmt(rs.getInt("i_cmt"));
+				vo.setCtnt(rs.getNString("ctnt"));
+
+				list.add(vo);
+			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} finally {
-			DbUtils.close(con, ps);
+			DbUtils.close(con, ps, rs);
 		}
+		return list;
 	}
 }

@@ -18,6 +18,29 @@
 	<div>조회수 : ${item.hits}</div>
 	<div>작성일 : ${item.r_dt}</div>
 </div>
+<div style="margin-top: 20px;">
+	<div>
+		<form action="/cmt" method="post">
+			<input type="hidden" name="typ" value="${item.typ}" />
+			<input type="hidden" name="i_board" value="${item.i_board}" />
+			댓글 :
+			<input type="text" name="cmt_ctnt" />
+			<input type="submit" value="댓글쓰기" />
+		</form>
+	</div>
+	<div>
+		<table>
+			<tr>
+				<th>댓글</th>
+			</tr>
+			<c:forEach items="${cmtList}" var="cmt">
+				<tr>
+					<td>${cmt.ctnt}</td>
+				</tr>
+			</c:forEach>
+		</table>
+	</div>
+</div>
 <script>
 	function isDel(e) {
 		var result = confirm('삭제 하시겠습니까?');

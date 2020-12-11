@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <h1>${data == null ? '글등록' : '글수정'}</h1>
 <form action="/bRegmod" method="post" id="frm" onsubmit="return chk();">
-	<input type="hidden1" name="i_board" value="${data.i_board}"> <input
-		type="hidden1" name="typ" value="${typ}">
+	<input type="hidden" name="i_board" value="${data.i_board}"> <input
+		type="hidden" name="typ" value="${typ}">
 	<div>
 		제목 : <input type="text" name="title" value="${data.title}">
 	</div>
