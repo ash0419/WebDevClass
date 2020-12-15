@@ -21,7 +21,7 @@
 				<label>Man<input type="radio" name="gender" value="1"></label>
 				</div>
 				<div><input type="text" name="ph" placeholder="Your Phone Number"></div>
-				<div><input type="submit" value="LOGIN"></div>
+				<div><input type="submit" value="JOIN"></div>
 			</form>
 			<a href="/login">Go To Login</a>
 		</div>

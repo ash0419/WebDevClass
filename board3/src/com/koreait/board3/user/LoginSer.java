@@ -6,6 +6,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import com.koreait.board3.common.Utils;
 
@@ -15,13 +16,19 @@ public class LoginSer extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
+		HttpSession hs = request.getSession();
+		System.out.println("hs : " + hs);
 		Utils.forward("로그인", "user/login", request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		doGet(request, response);
-	}
+		int result = UserService.login(request);
+		if (result == 1) {
+			response.sendRedirect("/loginChk.jsp");
+			return;
+		}
 
+		System.out.println("result : " + result);
+	}
 }
