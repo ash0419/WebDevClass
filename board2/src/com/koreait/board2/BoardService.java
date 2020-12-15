@@ -9,8 +9,8 @@ import java.util.List;
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 
-import com.koreait.board2.common.SQLInterUpdate;
 import com.koreait.board2.db.BoardDAO;
+import com.koreait.board2.db.SQLInterUpdate;
 import com.koreait.board2.model.BoardCmtVO;
 import com.koreait.board2.model.BoardVO;
 import com.mysql.cj.xdevapi.PreparableStatement;

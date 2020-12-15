@@ -8,7 +8,6 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.koreait.board2.common.SQLInterUpdate;
 import com.koreait.board2.model.BoardCmtVO;
 import com.koreait.board2.model.BoardVO;
 

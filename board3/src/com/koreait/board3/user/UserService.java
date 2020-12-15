@@ -13,18 +13,16 @@ public class UserService {
 		String nm = request.getParameter("nm");
 		int gender = Utils.getIntParam(request, "gender");
 		String ph = request.getParameter("ph");
-		
-		byte[] salt = SecurityUtils.getSalt();
+
+		String salt = SecurityUtils.getSalt();
 		String encryptPw = SecurityUtils.getSecurePassword(user_pw, salt);
-		
-		System.out.println("salt : " +salt);
-		System.out.println("salt : " +new String(salt));
-		System.out.println("encryptPw : " +encryptPw);
-		
+
+		System.out.println("encryptPw : " + encryptPw);
+
 		UserModel p = new UserModel();
 		p.setUser_id(user_id);
 		p.setUser_pw(encryptPw);
-		p.setSalt(salt.toString());
+		p.setSalt(salt);
 		p.setNm(nm);
 		p.setGender(gender);
 		p.setPh(ph);

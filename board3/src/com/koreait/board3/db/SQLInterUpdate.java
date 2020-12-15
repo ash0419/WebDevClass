@@ -1,4 +1,4 @@
-package com.koreait.board2.common;
+package com.koreait.board3.db;
 
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
