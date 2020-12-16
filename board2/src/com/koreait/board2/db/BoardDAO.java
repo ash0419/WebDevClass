@@ -46,7 +46,7 @@ public class BoardDAO {
 		List<BoardVO> list = new ArrayList<BoardVO>();
 
 		String sql = " SELECT i_board, title, r_dt, hits FROM t_board_? ORDER BY i_board DESC LIMIT ?, ? ";
-
+		
 		try {
 			con = DbUtils.getCon();
 			ps = con.prepareStatement(sql);

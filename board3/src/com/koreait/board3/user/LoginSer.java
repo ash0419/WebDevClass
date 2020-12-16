@@ -16,19 +16,31 @@ public class LoginSer extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		HttpSession hs = request.getSession();
-		System.out.println("hs : " + hs);
+		if (!Utils.isLogout(request)) {
+			response.sendRedirect("/main");
+			return;
+		}
 		Utils.forward("로그인", "user/login", request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 		int result = UserService.login(request);
-		if (result == 1) {
-			response.sendRedirect("/loginChk.jsp");
+
+		if (result == 1) { // 로그인 성공
+			response.sendRedirect("/main");
 			return;
 		}
-
+		switch (result) {
+		case 2:
+			request.setAttribute("msg", "아이디를 확인해 주세요.");
+			break;
+		case 3:
+			request.setAttribute("msg", "비밀번호를 확인해 주세요.");
+			break;
+		}
+		request.setAttribute("id", request.getParameter("user_id"));
+		doGet(request, response);
 		System.out.println("result : " + result);
 	}
 }
