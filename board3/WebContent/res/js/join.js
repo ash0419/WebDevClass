@@ -1,27 +1,21 @@
-function joinChk() {
+
+//글 제목 클릭
+function clkArticle(i_board) {
+	var url = `bDetail?i_board=${i_board}`;
+	location.href = url; //주소값 이동
+}
+
+//삭제 버튼 클릭
+function clkDel(i_board, typ) {
+	if (confirm('삭제 하시겠습니까?')) {
+		location.href = `bDel?i_board=${i_board}&typ=${typ}`;
+	}
+}
+
+//지금은 사용 X, 혹시나 나중에 욕이 있는지 체크하는 용도로 사용
+function chk() {
 	var frm = document.querySelector('#frm');
-
-	var eleId = frm.user_id;
-	var reUserId = /^[A-Za-z0-9+]*$/;
-	if (!reUserId.test(eleId.value)) {
-		alert('Check your id please');
-		eleId.focus();
-		return false;
-	}
-
-	var pw = frm.user_pw;
-	var pw_chk = frm.user_pw_chk;
-	if (pw.value !== pw_chk.value) {
-		alert('check your password please');
-		pw.focus();
-		return false;
-	}
-
-	var eleNm = frm.nm;
-	var reNm = /^[가-힣+]*$/;
-	if (!reNm.test(eleNm.value)) {
-		alert('Name is only Korean.');
-		eleNm.focus;
+	if (chkEmptyEle(frm.title, '제목') || chkEmptyEle(frm.ctnt, '내용')) {
 		return false;
 	}
 }

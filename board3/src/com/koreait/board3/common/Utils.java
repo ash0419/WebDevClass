@@ -11,13 +11,10 @@ import javax.servlet.http.HttpSession;
 import com.koreait.board3.model.UserModel;
 
 public class Utils {
+
 	public static void forwardTemp(String title, String openPage, String innerPage, HttpServletRequest request,
 			HttpServletResponse response) throws ServletException, IOException {
 		request.setAttribute("page", String.format("/WEB-INF/view/%s.jsp", innerPage));
-		/*
-		 * String jsp = String.format("/WEB-INF/view/%s.jsp", openPage);
-		 * request.getRequestDispatcher(jsp).forward(request, response);
-		 */
 		forward(title, openPage, request, response);
 	}
 

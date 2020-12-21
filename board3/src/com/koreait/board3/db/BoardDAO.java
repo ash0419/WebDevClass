@@ -17,7 +17,9 @@ public class BoardDAO extends CommonDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String sql = " SELECT A.i_board, A.seq, A.r_dt, A.hits, A.i_user, B.nm FROM t_board A INNER JOIN t_user B ON A.i_user = B.i_user WHERE a.typ = ? ORDER BY A.seq DESC ";
+		String sql = " SELECT " + " A.i_board, A.seq, A.title, A.r_dt, A.hits " + " , A.i_user, B.nm "
+				+ " FROM t_board A " + " INNER JOIN t_user B " + " ON A.i_user = B.i_user " + " WHERE A.typ = ? "
+				+ " ORDER BY A.seq DESC ";
 
 		try {
 			con = DbUtils.getCon();
@@ -51,7 +53,8 @@ public class BoardDAO extends CommonDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String sql = " SELECT A.seq, A.typ, A.title, A.ctnt, A.r_dt, A.hits, A.i_user, B.nm FROM t_board A INNER JOIN t_user B ON A.i_user = B.i_user WHERE A.i_board = ? ";
+		String sql = " SELECT " + " A.seq, A.typ, A.title, A.ctnt, A.r_dt, A.hits " + " , A.i_user, B.nm "
+				+ " FROM t_board A " + " INNER JOIN t_user B " + " ON A.i_user = B.i_user " + " WHERE A.i_board = ? ";
 
 		try {
 			con = DbUtils.getCon();

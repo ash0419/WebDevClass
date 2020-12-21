@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.koreait.board3.common.SecurityUtils;
 import com.koreait.board3.common.Utils;
 
-@WebServlet("/board/bRegmod")
+@WebServlet("/board/regmod")
 public class BoardRegmodSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -19,6 +19,10 @@ public class BoardRegmodSer extends HttpServlet {
 		if (SecurityUtils.isLogout(request)) {
 			response.sendRedirect("/login");
 			return;
+		}
+		int i_board = Utils.getIntParam(request, "i_board");
+		if (i_board > 0) { // 수정
+			request.setAttribute("data", BoardService.detail(request));
 		}
 
 		int typ = Utils.getIntParam(request, "typ");
@@ -29,9 +33,19 @@ public class BoardRegmodSer extends HttpServlet {
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		int result = BoardService.regMod(request);
-		String typ = request.getParameter("typ");
-		response.sendRedirect("list?typ=" + typ);
-	}
 
+		response.sendRedirect(BoardService.regMod(request));
+		/*
+		int i_board = Utils.getIntParam(request, "i_board");
+		int result = BoardService.regMod(request);
+
+		if (i_board > 0) { // 수정 -> 디테일 페이지
+			response.sendRedirect("detail?i_board=" + i_board);
+
+		} else { // 등록 -> 리스트 페이지
+			String typ = request.getParameter("typ");
+			response.sendRedirect("list?typ=" + typ);
+		}
+*/
+	}
 }

@@ -21,10 +21,10 @@ public class BoardListSer extends HttpServlet {
 			return;
 		}
 //		String[] jsList = {"board"};
-		request.setAttribute("jsList", new String[] { "board" });
 		int typ = Utils.getIntParam(request, "typ");
 		request.setAttribute("typ", typ);
+		request.setAttribute("jsList", new String[] { "board" });
 		BoardService.selBoardList(request);
-		Utils.forwardTemp("List", "temp/basic_temp", "board/bList", request, response);
+		Utils.forwardTemp("리스트", "temp/basic_temp", "board/bList", request, response);
 	}
 }

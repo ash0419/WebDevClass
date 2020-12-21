@@ -11,7 +11,7 @@ import com.koreait.board3.common.SecurityUtils;
 import com.koreait.board3.common.Utils;
 import com.koreait.board3.model.BoardSEL;
 
-@WebServlet("/board/bDetail")
+@WebServlet("/board/detail")
 public class BoardDetailSer extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
@@ -21,7 +21,6 @@ public class BoardDetailSer extends HttpServlet {
 			response.sendRedirect("/login");
 			return;
 		}
-		
 		request.setAttribute("jsList", new String[] { "board" });
 		BoardSEL data = BoardService.detail(request);
 		request.setAttribute("data", data);

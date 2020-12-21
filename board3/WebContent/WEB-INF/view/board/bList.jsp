@@ -2,7 +2,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <div>
 	<div>
-		<a href="bRegmod?typ=${typ}"><button>글쓰기</button></a> <!-- '/'를 안 붙이면 끝에 있는 주소값만 변경 ex) '/'뺏을 경우 /board/board -->
+		<a href="regmod?typ=${typ}"><button>글쓰기</button></a>
+		<!-- '/'를 안 붙이면 끝에 있는 주소값만 변경 ex) '/'뺏을 경우 /board/board -->
 	</div>
 	<table>
 		<tr>
@@ -10,6 +11,7 @@
 			<td>제목</td>
 			<td>조회수</td>
 			<td>작성일</td>
+			<td>작성자</td>
 		</tr>
 		<c:forEach items="${list}" var="item">
 			<tr class="pointer" onclick="clkArticle(${item.i_board})">
@@ -23,8 +25,8 @@
 	</table>
 	<div class="pageContainer">
 		<c:forEach begin="1" end="${pageCnt}" var="i">
-			<span class="page"> <a href="/bList?typ=${typ}&page=${i}">${i}</span>
+			<span class="page"> <a href="/list?typ=${typ}&page=${i}">${i}</a>
+			</span>
 		</c:forEach>
 	</div>
 </div>
-

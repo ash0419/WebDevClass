@@ -5,7 +5,7 @@
 
 	<c:if test="${data.i_user == loginUser.i_user}">
 		<button onclick="clkDel(${data.i_board}, ${data.typ});">삭제</button>
-		<a href="bRegmod?i_board=${data.i_board}">
+		<a href="regmod?typ=${data.typ}&i_board=${data.i_board}">
 			<button>수정</button>
 		</a>
 	</c:if>
@@ -19,8 +19,7 @@
 	</div>
 	<div style="margin-top: 20px;">
 		<div>
-			<form action="/cmt" method="post">
-				<input type="hidden" name="typ" value="${data.typ}">
+			<form action="cmt/reg" method="post">
 				<input type="hidden" name="i_board" value="${data.i_board}">
 				댓글:
 				<input type="text" name="cmt_ctnt">
