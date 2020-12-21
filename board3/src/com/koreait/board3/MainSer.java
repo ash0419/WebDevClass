@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.koreait.board3.common.SecurityUtils;
 import com.koreait.board3.common.Utils;
 
 @WebServlet("/main")
@@ -15,7 +16,7 @@ public class MainSer extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		if (Utils.isLogout(request)) {
+		if (SecurityUtils.isLogout(request)) {
 			response.sendRedirect("/login");
 			return;
 		}
