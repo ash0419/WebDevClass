@@ -30,10 +30,20 @@
 			<table>
 				<tr>
 					<th>댓글</th>
+					<th>작성자</th>
+					<th>날짜</th>
+					<th>비고</th>
 				</tr>
 				<c:forEach items="${cmtList}" var="item">
 					<tr>
 						<td>${item.ctnt}</td>
+						<td>${item.user_nm}</td>
+						<td>${item.r_dt}</td>
+						<td><c:if test="${item.i_user == loginUser.i_user}">
+								<button onclick="clkCmtDel(${item.i_cmt}, ${data.i_board});">삭제</button>
+								<button>수정</button>
+							</c:if></td>
+						<td>
 					</tr>
 				</c:forEach>
 			</table>
@@ -42,12 +52,6 @@
 	</div>
 </div>
 <script>
-	function isDel(e) {
-		var result = confirm('삭제 하시겠습니까?');
-		if(!result) {
-			e.preventDefault();
-		}
-	}
 	<c:if test="${msg != null}">
 		alert('${msg}');
 	</c:if>

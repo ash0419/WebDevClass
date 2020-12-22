@@ -9,15 +9,17 @@ import java.util.List;
 
 import com.koreait.board3.model.BoardCmtModel;
 import com.koreait.board3.model.BoardCmtSEL;
+import com.koreait.board3.model.BoardPARAM;
 
 public class BoardCmtDAO extends CommonDAO {
-	public static List<BoardCmtSEL> selCmtList(BoardCmtModel p) {
+	public static List<BoardCmtSEL> selCmtList(BoardPARAM p) {
 		List<BoardCmtSEL> list = new ArrayList<BoardCmtSEL>();
 		Connection con = null;
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
-		String sql = " SELECT A.i_cmt, A.i_board, A.i_user, A.ctnt, A.r_dt B.nm FROM t_board_cmt A INNER JOIN t_user B ON A.i_user = B.i_user "
+		String sql = " SELECT A.i_cmt, A.ctnt, "
+				+ "date_format(A.r_dt, '%Y-%m-%d %H:%i') AS r_dt, B.i_user, B.nm AS user_nm FROM t_board_cmt A LEFT JOIN t_user B ON A.i_user = B.i_user "
 				+ "WHERE A.i_board = ? ORDER BY A.i_cmt DESC ";
 		try {
 			con = DbUtils.getCon();
@@ -29,12 +31,11 @@ public class BoardCmtDAO extends CommonDAO {
 				BoardCmtSEL vo = new BoardCmtSEL();
 				list.add(vo);
 
-				vo.setI_board(rs.getInt("i_board"));
 				vo.setI_cmt(rs.getInt("i_cmt"));
-				vo.setI_user(rs.getInt("i_user"));
 				vo.setCtnt(rs.getNString("ctnt"));
-				vo.setUser_nm(rs.getNString("nm"));
 				vo.setR_dt(rs.getString("r_dt"));
+				vo.setI_user(rs.getInt("i_user"));
+				vo.setUser_nm(rs.getNString("user_nm"));
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
