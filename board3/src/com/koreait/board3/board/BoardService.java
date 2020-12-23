@@ -65,7 +65,7 @@ public class BoardService {
 		int i_board = Utils.getIntParam(request, "i_board");
 		BoardPARAM p = new BoardPARAM();
 		p.setI_board(i_board);
-
+		p.setI_user(SecurityUtils.getLoingUserPk(request));
 		request.setAttribute("cmtList", BoardCmtService.selBoardCmtList(p));
 //		return BoardDAO.selBoard(p);
 		return i_board != 0 ? BoardDAO.selBoard(p) : null;
@@ -74,7 +74,6 @@ public class BoardService {
 	public static int del(HttpServletRequest request) {
 		int i_board = Utils.getIntParam(request, "i_board");
 		int i_user = SecurityUtils.getLoingUserPk(request);
-
 		String sql = " DELETE FROM t_board WHERE i_board = ? AND i_user = ? ";
 
 		return BoardDAO.executeUpdate(sql, new SQLInterUpdate() {
