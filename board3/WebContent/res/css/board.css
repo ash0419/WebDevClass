@@ -10,8 +10,5 @@
 	top: 70px;
 	color: #ff7675;
 	font-size: 30px;
-}
-
-#favoriteContainer>i {
 	cursor: pointer;
 }

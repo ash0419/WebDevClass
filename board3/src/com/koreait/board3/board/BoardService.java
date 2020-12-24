@@ -84,4 +84,30 @@ public class BoardService {
 			}
 		});
 	}
+
+	public static String ajaxFavorite(HttpServletRequest request) {
+		int state = Utils.getIntParam(request, "state");
+		int i_board = Utils.getIntParam(request, "i_board");
+		int i_user = SecurityUtils.getLoingUserPk(request);
+		int result = 0;
+		
+		String sql = null;
+		switch (state) {
+		case 0: // 좋아요 해제
+			sql = " DELETE FROM t_board_favorite WHERE i_board = ? AND i_user = ? ";
+			break;
+		case 1: // 좋아요 처리
+			sql = " INSERT INTO t_board_favorite (i_board, i_user) VALUES (?, ?) ";
+			break;
+		}
+		
+		result = BoardDAO.executeUpdate(sql, new SQLInterUpdate() {
+			@Override
+			public void proc(PreparedStatement ps) throws SQLException {
+			ps.setInt(1, i_board);
+			ps.setInt(2, i_user);
+			}
+		});
+		return String.format("{\"result\":%d}", result);
+	}
 }

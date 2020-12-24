@@ -12,10 +12,10 @@
 <script defer src="/res/js/common.js"></script>
 <link rel="stylesheet" href="/res/css/board.css">
 <link rel="stylesheet" href="/res/css/common.css">
-<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
+<link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
 </head>
 <body>
-	<div id="container">
+	<div id="container" class="themed">
 		<header>
 			<ul>
 				<li>${loginUser.nm}님환영합니다.</li>
@@ -24,6 +24,7 @@
 				<li><a href="/board/list?typ=2">스포츠</a></li>
 				<li><a href="/board/list?typ=3">연예/방송</a></li>
 			</ul>
+			<input class="check" type="checkbox" />
 		</header>
 		<section>
 			<jsp:include page="${page}" />
