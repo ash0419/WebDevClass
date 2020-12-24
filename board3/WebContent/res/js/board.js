@@ -51,7 +51,7 @@ function toggleFavorite(i_board) {
 			i_board
 		}
 	}).then(function(res) {	// 통신 성공
-		if(res.data.result ==1) {
+		if(res.data.result ==1) { // res에 있는 data객체에 접근 후 result 값 가져오기
 			//var iconClass = state == 1? 'fas' : 'far';
 			fc.innerHTML = `<i class="${state ? 'fas' : 'far'} fa-heart"></i>`;
 			fc.setAttribute('is_favorite', state);
