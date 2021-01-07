@@ -26,6 +26,9 @@
 					<li><a href="/user/logout.korea">Logout</a></li>
 				</c:if>
 				<!-- TODO: 메뉴 뿌리기 -->
+				<c:forEach items="${menus}" var="item">
+					<li><a href="/board/list.korea?typ=${item.typ}">${item.nm}</a></li>
+				</c:forEach>
 			</ul>
 		</header>
 		<section>

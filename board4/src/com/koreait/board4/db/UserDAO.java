@@ -8,7 +8,7 @@ import java.sql.SQLException;
 import com.koreait.board4.db.DbUtils;
 import com.koreait.board4.model.UserModel;
 
-public class UserDAO {
+public class UserDAO extends CommonDAO {
 	public static UserModel selUser(String user_id) {
 		Connection con = null;
 		ResultSet rs = null;
@@ -20,13 +20,14 @@ public class UserDAO {
 			ps = con.prepareStatement(sql);
 			ps.setNString(1, user_id);
 			rs = ps.executeQuery();
+
 			if (rs.next()) {
-				UserModel m = new UserModel();
-				m.setI_user(rs.getInt("i_user"));
-				m.setNm(rs.getString("nm"));
-				m.setUser_pw(rs.getString("user_pw"));
-				m.setSalt(rs.getString("salt"));
-				return m;
+				UserModel vo = new UserModel();
+				vo.setI_user(rs.getInt("i_user"));
+				vo.setUser_pw(rs.getString("user_pw"));
+				vo.setSalt(rs.getString("salt"));
+				vo.setNm(rs.getNString("nm"));
+				return vo;
 			}
 		} catch (ClassNotFoundException | SQLException e) {
 			// TODO Auto-generated catch block
