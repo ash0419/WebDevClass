@@ -38,10 +38,10 @@ public class UserController {
 			System.out.println("로그인 성공");
 			loginUser.setSalt(null);
 			loginUser.setUser_pw(null);
-			
+
 			HttpSession session = request.getSession(); // session을 얻어옴
 			session.setAttribute("loginUser", loginUser);
-			
+
 			response.sendRedirect("/board/list.korea");
 		} else {
 			request.setAttribute("msg", "비밀번호를 확인해 주세요.");
@@ -85,5 +85,11 @@ public class UserController {
 		}
 		request.setAttribute("msg", "회원가입에 실패하였습니다.");
 		join(request, response);
+	}
+
+	public void logout(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		HttpSession hs = request.getSession();
+		hs.invalidate(); // 세션에 있는 정보를 다 날려줌
+		response.sendRedirect("/user/login.korea");
 	}
 }
