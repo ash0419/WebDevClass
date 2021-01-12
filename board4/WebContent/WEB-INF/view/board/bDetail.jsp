@@ -12,7 +12,7 @@
 	<div>
 		<div>번호 : ${data.seq}</div>
 		<div>조회수 : ${data.hits}</div>
-		<div>이름 : ${data.nm}</div>
+		<div>이름 : ${data.writer_nm}</div>
 		<div>제목 : ${data.title}</div>
 		<div>작성일 : ${data.r_dt}</div>
 		<div>${data.ctnt}</div>

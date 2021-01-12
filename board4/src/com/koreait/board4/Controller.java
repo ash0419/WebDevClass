@@ -57,6 +57,9 @@ public class Controller {
 			case "list.korea":
 				bCont.list(request, response);
 				return;
+			case "detail.korea":
+				bCont.detail(request, response);
+				return;
 			}
 			break;
 		}
@@ -69,6 +72,9 @@ public class Controller {
 					return;
 				case "regProc.korea":
 					bCont.regProc(request, response);
+					return;
+				case "mod.korea":
+					bCont.mod(request, response);
 					return;
 				case "modProc.korea":
 					bCont.modProc(request, response);
