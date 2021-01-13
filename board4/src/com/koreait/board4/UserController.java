@@ -42,7 +42,7 @@ public class UserController {
 			HttpSession session = request.getSession(); // session을 얻어옴
 			session.setAttribute("loginUser", loginUser);
 
-			response.sendRedirect("/board/list.korea");
+			response.sendRedirect("/board/list.korea?typ=1");
 		} else {
 			request.setAttribute("msg", "비밀번호를 확인해 주세요.");
 			login(request, response);

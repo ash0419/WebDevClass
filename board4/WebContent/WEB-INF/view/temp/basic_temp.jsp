@@ -27,7 +27,7 @@
 				</c:if>
 				<!-- TODO: 메뉴 뿌리기 -->
 				<c:forEach items="${menus}" var="item">
-					<li><a href="/board/list.korea?typ=${item.typ}">${item.nm}</a></li>
+					<li class="${item.typ == param.typ ? 'selectedBoard' : '' }"><a href="/board/list.korea?typ=${item.typ}">${item.nm}</a></li>
 				</c:forEach>
 			</ul>
 		</header>

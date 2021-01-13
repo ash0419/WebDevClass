@@ -79,6 +79,9 @@ public class Controller {
 				case "modProc.korea":
 					bCont.modProc(request, response);
 					return;
+				case "ajaxFavorite.korea":
+					bCont.ajaxFavorite(request, response);
+					return;
 				}
 			}
 		}

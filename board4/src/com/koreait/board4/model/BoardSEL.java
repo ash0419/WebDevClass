@@ -3,7 +3,7 @@ package com.koreait.board4.model;
 // Entity, Domain, DTO, VO, Model
 public class BoardSEL extends BoardModel {
 	private String writer_nm;
-	private int favorite_cnts;
+	private int favorite_cnt;
 	private int is_favorite;
 
 	public int getIs_favorite() {
@@ -22,11 +22,11 @@ public class BoardSEL extends BoardModel {
 		this.writer_nm = writer_nm;
 	}
 
-	public int getFavorite_cnts() {
-		return favorite_cnts;
+	public int getFavorite_cnt() {
+		return favorite_cnt;
 	}
 
-	public void setFavorite_cnts(int favorite_cnts) {
-		this.favorite_cnts = favorite_cnts;
+	public void setFavorite_cnt(int favorite_cnt) {
+		this.favorite_cnt = favorite_cnt;
 	}
 }
