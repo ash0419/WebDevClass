@@ -65,6 +65,15 @@ public class Controller {
 		}
 		if (SecurityUtils.getLoingUserPk(request) > 0) { // 로그인이 되어 있는 상태
 			switch (urlArr[1]) {
+			case "user":
+				switch (urlArr[2]) {
+				case "profile.korea":
+					uCont.profile(request, response);
+					return;
+				case "profileUpload.korea":
+					uCont.profileUpload(request, response);
+					return;
+				}
 			case "board":
 				switch (urlArr[2]) {
 				case "reg.korea":

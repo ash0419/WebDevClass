@@ -1,8 +1,10 @@
 package com.koreait.board4;
 
+import java.io.File;
 import java.io.IOException;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.util.Enumeration;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +16,8 @@ import com.koreait.board4.common.Utils;
 import com.koreait.board4.db.SQLInterUpdate;
 import com.koreait.board4.db.UserDAO;
 import com.koreait.board4.model.UserModel;
+import com.oreilly.servlet.MultipartRequest;
+import com.oreilly.servlet.multipart.DefaultFileRenamePolicy;
 
 public class UserController {
 	// 로그인 페이지 띄우기(GET 방식)
@@ -27,7 +31,11 @@ public class UserController {
 		// 에러: 0, 이상없음: 1, 아이디 없음: 2, 비밀번호 틀림: 3,
 		String login_id = request.getParameter("user_id");
 		String login_pw = request.getParameter("user_pw");
-		UserModel loginUser = UserDAO.selUser(login_id);
+		
+		UserModel param = new UserModel();
+		param.setUser_id(login_id);
+		//이상없음: 1 아이디 없음 :2, 비밀번호 틀림 : 3
+		UserModel loginUser = UserDAO.selUser(param);
 
 		if (loginUser == null) {
 			request.setAttribute("msg", "아이디를 확인해 주세요.");
@@ -38,7 +46,11 @@ public class UserController {
 			System.out.println("로그인 성공");
 			loginUser.setSalt(null);
 			loginUser.setUser_pw(null);
-
+			loginUser.setR_dt(null);
+			loginUser.setPh(null);
+			loginUser.setProfile_img(null);
+			loginUser.setUser_id(null);
+			
 			HttpSession session = request.getSession(); // session을 얻어옴
 			session.setAttribute("loginUser", loginUser);
 
@@ -91,5 +103,57 @@ public class UserController {
 		HttpSession hs = request.getSession();
 		hs.invalidate(); // 세션에 있는 정보를 다 날려줌
 		response.sendRedirect("/user/login.korea");
+	}
+
+	public void profile(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		UserModel param = new UserModel();
+		param.setI_user(SecurityUtils.getLoingUserPk(request));
+		request.setAttribute("data", UserDAO.selUser(param));
+		Utils.forwardTemp("프로필", "temp/basic_temp", "user/profile", request, response);
+	}
+
+	// 이미지 업로드 proc
+	public void profileUpload(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int i_user = SecurityUtils.getLoingUserPk(request);
+
+		String savePath = request.getServletContext().getRealPath("/res/img/" + i_user);
+
+		File folder = new File(savePath);
+		if (!folder.exists()) {
+			folder.mkdirs();
+		}
+		int sizeLimit = 104_857_600; // 100MB 제한
+
+		try {
+			MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8",
+					new DefaultFileRenamePolicy());
+
+			Enumeration files = multi.getFileNames();
+			if (files.hasMoreElements()) {
+				String eleName = (String) files.nextElement();
+
+				System.out.println("eleName : " + eleName);
+
+				String fileNm = multi.getFilesystemName(eleName);
+				System.out.println("fileNm2 : " + fileNm);
+
+				String fileType = multi.getContentType(eleName);
+				System.out.println("fileType : " + fileType);
+
+				String sql = " UPDATE t_user SET profile_img = ? WHERE i_user = ? ";
+
+				UserDAO.executeUpdate(sql, new SQLInterUpdate() {
+					@Override
+					public void proc(PreparedStatement ps) throws SQLException {
+						ps.setString(1, fileNm);
+						ps.setInt(2, i_user);
+					}
+				});
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		response.sendRedirect("/user/profile.korea");
 	}
 }

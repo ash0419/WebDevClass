@@ -29,6 +29,10 @@
 				<c:forEach items="${menus}" var="item">
 					<li class="${item.typ == param.typ ? 'selectedBoard' : '' }"><a href="/board/list.korea?typ=${item.typ}">${item.nm}</a></li>
 				</c:forEach>
+				<c:if test="${loginUser != null}">
+					<li><a href="/user/profile.korea">프로필</a></li>
+					<li><a href="/user/changePw.korea">비밀번호 변경</a></li>
+				</c:if>
 			</ul>
 		</header>
 		<section>
