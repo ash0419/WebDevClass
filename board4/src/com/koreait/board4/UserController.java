@@ -31,10 +31,10 @@ public class UserController {
 		// 에러: 0, 이상없음: 1, 아이디 없음: 2, 비밀번호 틀림: 3,
 		String login_id = request.getParameter("user_id");
 		String login_pw = request.getParameter("user_pw");
-		
+
 		UserModel param = new UserModel();
 		param.setUser_id(login_id);
-		//이상없음: 1 아이디 없음 :2, 비밀번호 틀림 : 3
+		// 이상없음: 1 아이디 없음 :2, 비밀번호 틀림 : 3
 		UserModel loginUser = UserDAO.selUser(param);
 
 		if (loginUser == null) {
@@ -50,7 +50,7 @@ public class UserController {
 			loginUser.setPh(null);
 			loginUser.setProfile_img(null);
 			loginUser.setUser_id(null);
-			
+
 			HttpSession session = request.getSession(); // session을 얻어옴
 			session.setAttribute("loginUser", loginUser);
 
@@ -109,6 +109,7 @@ public class UserController {
 		UserModel param = new UserModel();
 		param.setI_user(SecurityUtils.getLoingUserPk(request));
 		request.setAttribute("data", UserDAO.selUser(param));
+		request.setAttribute("jsList", new String[] { "axios.min", "user" });
 		Utils.forwardTemp("프로필", "temp/basic_temp", "user/profile", request, response);
 	}
 
@@ -119,41 +120,79 @@ public class UserController {
 
 		String savePath = request.getServletContext().getRealPath("/res/img/" + i_user);
 
+//		File imgFile = new File(savePath + "/파일명.jpg");
+//		if(imgFile.exists()) {
+//			imgFile.delete();
+//		}
 		File folder = new File(savePath);
-		if (!folder.exists()) {
-			folder.mkdirs();
+		if (folder.exists()) {
+			// 기존 이미지가 있었다면 삭제처리
+			File[] folder_list = folder.listFiles();
+			for (File file : folder_list) {
+				if (file.isFile()) {
+					file.delete();
+				}
+			}
+			folder.delete();
 		}
+		folder.mkdirs(); // s를 붙여주면 없는 상위 폴더까지 다 만들어준다. 될수있으면 쓰는 걸 권장.
+
 		int sizeLimit = 104_857_600; // 100MB 제한
 
-		try {
-			MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8",
-					new DefaultFileRenamePolicy());
+		MultipartRequest multi = new MultipartRequest(request, savePath, sizeLimit, "utf-8",
+				new DefaultFileRenamePolicy());
 
-			Enumeration files = multi.getFileNames();
-			if (files.hasMoreElements()) {
-				String eleName = (String) files.nextElement();
+		Enumeration files = multi.getFileNames();
+		if (files.hasMoreElements()) {
+			String eleName = (String) files.nextElement();
 
-				System.out.println("eleName : " + eleName);
+			System.out.println("eleName : " + eleName);
 
-				String fileNm = multi.getFilesystemName(eleName);
-				System.out.println("fileNm2 : " + fileNm);
+			String fileNm = multi.getFilesystemName(eleName);
+			System.out.println("fileNm2 : " + fileNm);
 
-				String fileType = multi.getContentType(eleName);
-				System.out.println("fileType : " + fileType);
+			String fileType = multi.getContentType(eleName);
+			System.out.println("fileType : " + fileType);
 
-				String sql = " UPDATE t_user SET profile_img = ? WHERE i_user = ? ";
+			String sql = " UPDATE t_user SET profile_img = ? WHERE i_user = ? ";
 
-				UserDAO.executeUpdate(sql, new SQLInterUpdate() {
-					@Override
-					public void proc(PreparedStatement ps) throws SQLException {
-						ps.setString(1, fileNm);
-						ps.setInt(2, i_user);
-					}
-				});
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+			UserDAO.executeUpdate(sql, new SQLInterUpdate() {
+				@Override
+				public void proc(PreparedStatement ps) throws SQLException {
+					ps.setString(1, fileNm);
+					ps.setInt(2, i_user);
+				}
+			});
 		}
 		response.sendRedirect("/user/profile.korea");
+	}
+
+	public void delProfileImg(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		int i_user = SecurityUtils.getLoingUserPk(request);
+		String savePath = request.getServletContext().getRealPath("/res/img/" + i_user);
+
+		File folder = new File(savePath);
+		if (folder.exists()) {
+			// 기존 이미지가 있었다면 삭제처리
+			File[] folder_list = folder.listFiles();
+			for (File file : folder_list) {
+				if (file.isFile()) {
+					file.delete();
+				}
+			}
+			folder.delete();
+		}
+		String sql = " UPDATE t_user SET profile_img = null WHERE i_user = ? ";
+
+		UserDAO.executeUpdate(sql, new SQLInterUpdate() {
+			@Override
+			public void proc(PreparedStatement ps) throws SQLException {
+				ps.setInt(1, i_user);
+			}
+		});
+		String result = "{\"result\": 1}";
+		response.setContentType("application/json");
+		response.getWriter().print(result);
 	}
 }

@@ -73,6 +73,9 @@ public class Controller {
 				case "profileUpload.korea":
 					uCont.profileUpload(request, response);
 					return;
+				case "delProfileImg.korea":
+					uCont.delProfileImg(request, response);
+					return;
 				}
 			case "board":
 				switch (urlArr[2]) {
