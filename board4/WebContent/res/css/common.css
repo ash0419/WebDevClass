@@ -114,3 +114,12 @@ header ul li a:hover:not(.active) {
 	height: 100%;
 	/*margin-left: -50px;*/
 }
+
+.profile-td {
+	display: flex;
+	align-items: center;
+}
+
+.profile-td img {
+	
+}

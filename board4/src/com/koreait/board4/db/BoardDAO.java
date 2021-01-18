@@ -12,7 +12,7 @@ public class BoardDAO extends CommonDAO {
 		ResultSet rs = null;
 		String sql = " SELECT A.i_board, A.seq, A.typ, A.title, A.ctnt, A.r_dt, A.hits"
 				+ " , B.i_user, B.nm AS writer_nm" + " , ifnull(C.favorite_cnt, 0) AS favorite_cnt"
-				+ " , CASE WHEN D.i_board IS NULL THEN 0 ELSE 1 END AS is_favorite" + " FROM t_board A"
+				+ " , CASE WHEN D.i_board IS NULL THEN 0 ELSE 1 END AS is_favorite, B.profile_img " + " FROM t_board A"
 				+ " LEFT JOIN t_user B" + " ON A.i_user = B.i_user" + " LEFT JOIN ("
 				+ " SELECT i_board, COUNT(i_board) AS favorite_cnt" + "	FROM t_board_favorite" + " GROUP BY i_board"
 				+ " ) C ON A.i_board = C.i_board" + " LEFT JOIN t_board_favorite D" + " ON A.i_board = D.i_board"
@@ -37,6 +37,7 @@ public class BoardDAO extends CommonDAO {
 				vo.setWriter_nm(rs.getString("writer_nm"));
 				vo.setFavorite_cnt(rs.getInt("favorite_cnt"));
 				vo.setIs_favorite(rs.getInt("is_favorite"));
+				vo.setProfile_img(rs.getString("profile_img"));
 				return vo;
 			}
 		} catch (Exception e) {
@@ -54,7 +55,7 @@ public class BoardDAO extends CommonDAO {
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 		String sql = " SELECT A.i_board, A.seq, A.title, A.r_dt, A.hits" + " , B.i_user, B.nm AS writer_nm"
-				+ " , ifnull(C.favorite_cnt, 0) AS favorite_cnt" + " FROM t_board A" + " LEFT JOIN t_user B"
+				+ " , ifnull(C.favorite_cnt, 0) AS favorite_cnt, B.profile_img " + " FROM t_board A" + " LEFT JOIN t_user B"
 				+ " ON A.i_user = B.i_user" + " LEFT JOIN (" + " SELECT i_board, COUNT(i_board) AS favorite_cnt"
 				+ "	FROM t_board_favorite" + " GROUP BY i_board" + " ) C ON A.i_board = C.i_board" + " WHERE A.typ = ?"
 				+ " ORDER BY seq DESC";
@@ -77,6 +78,7 @@ public class BoardDAO extends CommonDAO {
 				vo.setI_user(rs.getInt("i_user"));
 				vo.setWriter_nm(rs.getString("writer_nm"));
 				vo.setFavorite_cnt(rs.getInt("favorite_cnt"));
+				vo.setProfile_img(rs.getString("profile_img"));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -1,4 +1,3 @@
-
 //글 제목 클릭
 function clkArticle(i_board) {
 	var url = `bDetail?i_board=${i_board}`;

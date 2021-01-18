@@ -29,7 +29,16 @@
 						<td>${item.hits}</td>
 						<td>${item.favorite_cnt}</td>
 						<td>${item.r_dt}</td>
-						<td>${item.writer_nm}</td>
+						<td class="profile-td"><c:if test="${item.profile_img == null}">
+								<div class="circular--landscape circular--size50">
+									<img id="profileImg" src="/res/img/basic_profile.jpg">
+								</div>
+							</c:if> <c:if test="${item.profile_img != null}">
+								<div class="circular--landscape circular--size50">
+									<img id="profileImg" src="/res/img/${item.i_user}/${item.profile_img}">
+								</div>
+							</c:if> 
+							<span class="profile-td-nm">${item.writer_nm}</span></td>
 					</tr>
 				</c:forEach>
 			</table>

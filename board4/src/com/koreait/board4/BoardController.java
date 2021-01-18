@@ -90,7 +90,8 @@ public class BoardController {
 				ps.setInt(4, typ);
 			}
 		});
-		request.getRequestDispatcher("/board/list?typ=" + typ).forward(request, response); // 원래 쓰던 데이터가 그대로 남아서 가지고 온다.
+		
+		request.getRequestDispatcher("/board/list.korea?typ=" + typ).forward(request, response); // 원래 쓰던 데이터가 그대로 남아서 가지고 온다.
 
 		// response.sendRedirect("/board/list?typ=" + typ); 새로운 request가 만들어진다.
 	}

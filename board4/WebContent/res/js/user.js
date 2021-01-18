@@ -16,3 +16,35 @@ function delProfileImg() {
 		console.error('err 발생 : ' + err);
 	})
 }
+
+//비밀번호 확인
+function chkPw() {
+	var frm = document.querySelector('#frm');
+	var msg = document.querySelector('div[style="color: red;"]');
+	
+	if (frm.current_pw.value == '') {
+		msg.textContent = '기존 비밀번호를 작성해 주세요.';
+		frm.current_pw.focus();
+		return false;
+	} else if (frm.user_pw == '') {
+		msg.textContent = '변경 비밀번호를 작성해 주세요.';
+		frm.current_pw.focus();
+		return false;
+	} else if (frm.user_pw.value != frm.chk_user_pw) {
+		msg.textContent = '변경/확인 비밀번호를 확인해 주세요.';
+		frm.current_pw.focus();
+		return false;
+	}
+	return ture;
+	/*
+		var user_pw = document.querySelector('input[name="user_pw"]').value;
+		var chk_user_pw = document.querySelector('input[name="chk_user_pw"]').value;
+	
+		if (user_pw != chk_user_pw) {
+			var msg = document.querySelector('div[style="color: red;"]');
+			msg.textContent = '확인비밀번호가 다릅니다.';
+			return false;
+		}
+		return true;
+	*/
+}
